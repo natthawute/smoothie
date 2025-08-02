@@ -12,16 +12,10 @@
     <div class="container">
         <header class="header">
             <div class="header-content">
-                <div class="header-top">
-                    <button id="dark-mode-toggle" class="dark-mode-btn" aria-label="ダークモード切り替え">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </div>
                 <h1 class="title">
                     <i class="fas fa-blender" aria-hidden="true"></i>
                     スムージーレシピジェネレーター
                 </h1>
-                <p class="subtitle">お好みの材料で美味しいスムージーを作りましょう</p>
             </div>
         </header>
 
@@ -53,10 +47,6 @@
                         <i class="fas fa-magic" aria-hidden="true"></i>
                         レシピ生成
                     </button>
-                    <button id="recipe-of-day-btn" class="btn btn-secondary" aria-label="今日のレシピ">
-                        <i class="fas fa-star" aria-hidden="true"></i>
-                        今日のレシピ
-                    </button>
                 </div>
             </div>
 
@@ -77,14 +67,39 @@
                     
                     <!-- Recipe Actions -->
                     <div class="recipe-actions" id="recipe-actions" style="display: none;">
-                        <button id="share-recipe-btn" class="btn btn-secondary" aria-label="レシピを共有">
-                            <i class="fas fa-share-alt" aria-hidden="true"></i>
-                            共有
+                        <div class="rating-section">
+                            <span class="rating-label">評価:</span>
+                            <div class="rating-stars">
+                                <i class="fas fa-star" data-rating="1" aria-label="1つ星"></i>
+                                <i class="fas fa-star" data-rating="2" aria-label="2つ星"></i>
+                                <i class="fas fa-star" data-rating="3" aria-label="3つ星"></i>
+                                <i class="fas fa-star" data-rating="4" aria-label="4つ星"></i>
+                                <i class="fas fa-star" data-rating="5" aria-label="5つ星"></i>
+                            </div>
+                        </div>
+                        <button id="save-recipe-btn" class="btn btn-secondary" aria-label="レシピを保存">
+                            <i class="fas fa-save" aria-hidden="true"></i>
+                            保存
                         </button>
-                        <button id="favorite-recipe-btn" class="btn btn-secondary" aria-label="お気に入りに追加">
-                            <i class="fas fa-heart" aria-hidden="true"></i>
-                            お気に入り
+                        <button id="view-history-btn" class="btn btn-secondary" aria-label="履歴を表示">
+                            <i class="fas fa-history" aria-hidden="true"></i>
+                            履歴
                         </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Modal -->
+            <div class="history-modal" id="history-modal">
+                <div class="history-content">
+                    <div class="history-header">
+                        <h3>レシピ履歴</h3>
+                        <button id="close-history-btn" class="close-btn" aria-label="履歴を閉じる">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="history-list" id="history-list">
+                        <!-- History items will be populated by JavaScript -->
                     </div>
                 </div>
             </div>
