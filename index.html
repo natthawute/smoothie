@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スムージーレシピジェネレーター</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="header-top">
+                    <button id="dark-mode-toggle" class="dark-mode-btn" aria-label="ダークモード切り替え">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+                <h1 class="title">
+                    <i class="fas fa-blender" aria-hidden="true"></i>
+                    スムージーレシピジェネレーター
+                </h1>
+                <p class="subtitle">お好みの材料で美味しいスムージーを作りましょう</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Quick Actions Section (Most Used) -->
+            <div class="quick-actions-section">
+                <div class="quantity-controls">
+                    <div class="quantity-group">
+                        <label for="fruits-count">フルーツ:</label>
+                        <button type="button" onclick="adjustQuantity('fruits', -1)" class="quantity-btn" aria-label="フルーツを減らす">-</button>
+                        <input type="number" id="fruits-count" value="2" min="1" max="5" aria-label="フルーツの数">
+                        <button type="button" onclick="adjustQuantity('fruits', 1)" class="quantity-btn" aria-label="フルーツを増やす">+</button>
+                    </div>
+                    <div class="quantity-group">
+                        <label for="veggies-count">野菜:</label>
+                        <button type="button" onclick="adjustQuantity('veggies', -1)" class="quantity-btn" aria-label="野菜を減らす">-</button>
+                        <input type="number" id="veggies-count" value="1" min="1" max="5" aria-label="野菜の数">
+                        <button type="button" onclick="adjustQuantity('veggies', 1)" class="quantity-btn" aria-label="野菜を増やす">+</button>
+                    </div>
+                    <div class="quantity-group">
+                        <label for="liquids-count">液体:</label>
+                        <button type="button" onclick="adjustQuantity('liquids', -1)" class="quantity-btn" aria-label="液体を減らす">-</button>
+                        <input type="number" id="liquids-count" value="1" min="1" max="5" aria-label="液体の数">
+                        <button type="button" onclick="adjustQuantity('liquids', 1)" class="quantity-btn" aria-label="液体を増やす">+</button>
+                    </div>
+                </div>
+                <div class="generate-section">
+                    <button id="generate-recipe-btn" class="btn btn-primary" aria-label="レシピを生成">
+                        <i class="fas fa-magic" aria-hidden="true"></i>
+                        レシピ生成
+                    </button>
+                    <button id="recipe-of-day-btn" class="btn btn-secondary" aria-label="今日のレシピ">
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        今日のレシピ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recipe Display Section -->
+            <div class="recipe-section">
+                <div class="recipe-card" id="recipe-card">
+                    <div class="recipe-header">
+                        <h2 class="recipe-title">今日のレシピ</h2>
+                        <div class="recipe-date" id="recipe-date"></div>
+                    </div>
+                    
+                    <div class="recipe-content" id="recipe-content">
+                        <div class="recipe-placeholder">
+                            <i class="fas fa-blender" aria-hidden="true"></i>
+                            <p>ボタンをクリックしてスムージーレシピを生成してください！</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Recipe Actions -->
+                    <div class="recipe-actions" id="recipe-actions" style="display: none;">
+                        <button id="share-recipe-btn" class="btn btn-secondary" aria-label="レシピを共有">
+                            <i class="fas fa-share-alt" aria-hidden="true"></i>
+                            共有
+                        </button>
+                        <button id="favorite-recipe-btn" class="btn btn-secondary" aria-label="お気に入りに追加">
+                            <i class="fas fa-heart" aria-hidden="true"></i>
+                            お気に入り
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ingredients Management Section (Collapsible) -->
+            <div class="ingredients-management-section">
+                <div class="ingredients-toggle">
+                    <button id="toggle-ingredients" class="btn btn-secondary" aria-label="材料管理パネルを開く">
+                        <i class="fas fa-cog" aria-hidden="true"></i>
+                        <span>材料管理</span>
+                    </button>
+                </div>
+                
+                <div class="ingredients-panel" id="ingredients-panel">
+                    <!-- Search functionality -->
+                    <div class="search-section">
+                        <div class="search-container">
+                            <input type="text" id="ingredient-search" placeholder="材料を検索..." aria-label="材料検索">
+                            <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredients-grid">
+                        <div class="ingredient-category">
+                            <h3><i class="fas fa-apple-alt" aria-hidden="true"></i> フルーツ</h3>
+                            <div class="ingredients-list" id="fruits-list">
+                                <!-- Fruits will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div class="ingredient-category">
+                            <h3><i class="fas fa-carrot" aria-hidden="true"></i> 野菜</h3>
+                            <div class="ingredients-list" id="veggies-list">
+                                <!-- Vegetables will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div class="ingredient-category">
+                            <h3><i class="fas fa-glass-whiskey" aria-hidden="true"></i> 液体</h3>
+                            <div class="ingredients-list" id="liquids-list">
+                                <!-- Liquids will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="custom-ingredient">
+                        <h3><i class="fas fa-plus-circle" aria-hidden="true"></i> カスタム材料を追加</h3>
+                        <div class="add-ingredient-form">
+                            <input type="text" id="custom-ingredient-input" placeholder="材料名を入力..." aria-label="カスタム材料名">
+                            <select id="custom-ingredient-category" aria-label="材料カテゴリ">
+                                <option value="fruits">フルーツ</option>
+                                <option value="veggies">野菜</option>
+                                <option value="liquids">液体</option>
+                            </select>
+                            <button id="add-ingredient-btn" class="btn btn-secondary" aria-label="材料を追加">
+                                <i class="fas fa-plus" aria-hidden="true"></i> 追加
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 スムージーレシピジェネレーター. <i class="fas fa-heart" aria-hidden="true"></i> スムージー愛好者のために作られました！</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
